@@ -1,38 +1,37 @@
-import tkinter
-from tkinter import ttk
+from mine import Mine
+from new_button_double_list import New_button_double_list
+from new_button import New_button
+from tkinter import *
+from tkinter import ttk, messagebox
 
-window = tkinter.Tk()
+class MineSweeper:
+    def __init__(self):
+        window = Tk()
+        window.title("지뢰 찾기")
+        window.resizable(False, False)
+        self.window = window
 
-window.title("지뢰 찾기")
+        width = 10 # 지뢰찾기의 너비
+        height = 8 # 지뢰찾기의 높이
+        mine_count = 10 # 지뢰 개수
 
-# 변수 설정
-new_button = [] # 아무것도 누르지 않은 상태의 버튼들이 모여있는 이중 리스트
+        # new_button_double_list 클래스
+        new_button_double_list = New_button_double_list(window, width, height, mine_count)
+        new_button_double_list.create()
 
-def new_button_click():
-    pass
+        # 스마일 이모티콘 버튼  -----------------------------------------------------------------------
+        def home():
+            messagebox.showinfo("Game Restart", "게임을 재시작하겠습니다.")
+            self.window.destroy()
+            MineSweeper()
 
+        home_img = PhotoImage(file="picture/smile_imoticon.gif")
+        home_img_resize = home_img.subsample(7, 7)
+        home_button = Button(self.window, command=home, text="게임 종료", image=home_img_resize, width=40, height=17)
+        home_button.grid(column=0, row=0)
+        # ---------------------------------------------------------------------------------------------
 
-# 지뢰찾기의 행과 열 개수
-width = 10
-height = 15
+        self.window.mainloop()
 
-# 지뢰 개수
-mine_count = 10
-
-# new_button에 width, height만큼 버튼들을 이중리스트로 생성
-for i in range(height):
-    temp_row = [] # 변수 초기화
-    for j in range(width):
-        # temp_row.append(0)
-        temp_row.append(ttk.Button(window, text="N", command=new_button_click))
-        temp_row[j].grid(column= j, row = i)
-    new_button.append(temp_row)
-
-# 지뢰 랜덤 생성
-for i in range(mine_count):
-    
-
-
-
-window.mainloop()
+MineSweeper()
 
